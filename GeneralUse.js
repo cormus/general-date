@@ -13,6 +13,8 @@ function GeneralUse()
 	var obj = this;
 	obj.fileExists = fileExists;
 	obj.removeAccent = removeAccent;
+	obj.validateEmail = validateEmail;
+	obj.onlyNumber = onlyNumber;
 	return obj;
 	
 	/** 
@@ -37,7 +39,7 @@ function GeneralUse()
 		}
 
 		return false;
-	}	
+	};
 	
 	/**
 	* Function for remove accent 
@@ -63,5 +65,53 @@ function GeneralUse()
 				
 			}
 		return nova;
-	}
+	};
+	
+	/**
+	 * Function for email validation
+	 * 
+	 * @param String email 
+	 * @return Boolean
+	 */
+	function  validateEmail(email)
+	{
+		er = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2}/;
+		if(er.exec(email))
+			return true;
+		else
+			return false;
+	};
+	
+	/**
+	 * Função para só permitir números nos inputs dos forms
+	 * 
+	 * Ex:
+	 *    <input maxlength="9" onkeydown="javascript:return onlyNumber(event);"name="cep">
+	 *
+	 * @param Event
+	 * @return Boolean
+	 */
+	function onlyNumber(event){
+	   var tecla = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+	   if ((tecla >= 48 && tecla <= 57) || (tecla >= 96 && tecla <= 105) || tecla == 8 ||  tecla == 9)
+	   {
+		   return  true;
+	   }
+	   else
+	   {
+		   return  false;
+	   }
+	};
+	
+	/**
+	* Function to create valid URL from texts with accents or spaces
+	* 
+	* @param String
+	*/
+	function createUrl(value)
+	{
+
+		return removeAccent(value).toLowerCase().replace(/[^a-z0-9]+/g,'-');
+
+	};
 }
